@@ -1,9 +1,7 @@
 {
   "private": true,
   "name": "netlify-functions-sandbox",
-
   "description": "",
-
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +14,8 @@
   "bugs": {
     "url": "https://github.com/5310/netlify-functions-sandbox/issues"
   },
-  "homepage": "https://github.com/5310/netlify-functions-sandbox#readme"
+  "homepage": "https://github.com/5310/netlify-functions-sandbox#readme",
+  "devDependencies": {
+    "netlify-cli": "^2.12.0"
+  }
 }
