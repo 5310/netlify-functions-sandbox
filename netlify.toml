@@ -1,0 +1,7 @@
+[build]
+  publish = "public"
+
+[[redirects]]
+  from = "/locked"
+  to = "/locked.preview"
+  status = 200
