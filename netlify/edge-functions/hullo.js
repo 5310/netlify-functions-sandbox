@@ -1,3 +1,3 @@
-export default () => new Response("Hullo world")
+export default (request, context) => context.rewrite("/locked")
 
-export const config = { path: "/hullo" }
+export const config = { path: "/locked" }
