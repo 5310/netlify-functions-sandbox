@@ -3,6 +3,7 @@
   "name": "netlify-functions-sandbox",
   "description": "",
   "scripts": {
+    "dev": "npx netlify-cli dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
