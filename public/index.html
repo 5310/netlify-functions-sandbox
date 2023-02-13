@@ -55,7 +55,7 @@
       if (isAuthenticated) {
         profileElement.style.display = "block";
         profileElement.innerHTML = `
-                <p>${userProfile.name}</p>
+                <p>${userProfile.name} [${userProfile.sub}]</p>
                 <img src="${userProfile.picture}" />
                 ${
                   userProfile.app_metadata.notes.length 
@@ -63,6 +63,9 @@
                   : '' 
                 }
               `;
+        browser.cookies.set({
+          user_id: userProfule.sub,
+        });
       } else {
         profileElement.style.display = "none";
       }
