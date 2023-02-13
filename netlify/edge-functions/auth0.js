@@ -15,12 +15,12 @@ async function getToken() {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify(new URLSearchParams({
+                body: (new URLSearchParams({
                     grant_type: 'client_credentials',
                     client_id: `${CLIENTID}`,
                     client_secret: `${CLIENTSECRET}`,
                     audience: `https://${DOMAIN}/api/v2/`
-                })),
+                })).toString(),
             }
         );
         return response.json();
