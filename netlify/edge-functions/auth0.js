@@ -50,8 +50,7 @@ async function getUser(token, user_id) {
 }
 
 export default async (request, context) => {
-    console.log(context.geo.ip)
-    const ip = context.geo.ip
+    const ip = context.ip
     const user_id = context.cookies.get('user_id')
     const token = (await getToken())
     const user = await getUser(token, user_id)
