@@ -31,6 +31,7 @@ async function getToken() {
 
 async function getUser(token, user_id) {
     try {
+        console.log(`https://${DOMAIN}/api/v2/users/${encodeURI(user_id)}`)
         const response = await fetch(
             `https://${DOMAIN}/api/v2/users/${encodeURI(user_id)}`, 
             {
