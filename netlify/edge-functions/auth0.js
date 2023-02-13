@@ -39,7 +39,7 @@ async function getUser(token, user_id) {
                 cache: 'no-cache',
                 cors: 'no-cors',
                 headers: {
-                    'authorization': `Bearer ${token}0`,
+                    'authorization': `Bearer ${token}`,
                     'content-type': 'application/json'
                 },
             }
