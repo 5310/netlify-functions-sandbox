@@ -24,7 +24,7 @@ async function getToken() {
             })),
         }
     );
-    return response.json(); // parses JSON response into native JavaScript objects
+    return response; // parses JSON response into native JavaScript objects
 }
 
 export default async (request, context) => new Response(await JSON.stringify(getToken()))
