@@ -34,7 +34,6 @@ async function getUser(token, user_id) {
         const response = await fetch(
             `https://${DOMAIN}/api/v2/users/${encodeURI(user_id)}`, 
             {
-                method: 'POST',
                 cache: 'no-cache',
                 cors: 'no-cors',
                 headers: {
@@ -45,6 +44,7 @@ async function getUser(token, user_id) {
         );
         return response.json();
     } catch (e) {
+        console.log('this is in error')
         return e;
     }
 }
