@@ -38,7 +38,7 @@ async function getUser(token, user_id) {
                 cache: 'no-cache',
                 cors: 'no-cors',
                 headers: {
-                    'authorization': `Bearer ${token}`,
+                    'authorization': `Bearer ${token}0`,
                     'content-type': 'application/json'
                 },
             }
@@ -50,6 +50,7 @@ async function getUser(token, user_id) {
 }
 
 export default async (request, context) => {
+    console.log(context.geo.ip)
     const ip = context.geo.ip
     const user_id = context.cookies.get('user_id')
     const token = (await getToken())
