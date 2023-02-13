@@ -32,13 +32,13 @@ async function getToken() {
 async function getUser(token, user_id) {
     try {
         const response = await fetch(
-            `https://${DOMAIN}/api/v2/users/${user_id}`, 
+            `https://${DOMAIN}/api/v2/users/${encodeURI(user_id)}`, 
             {
                 method: 'POST',
                 cache: 'no-cache',
                 cors: 'no-cors',
                 headers: {
-                    authorization: `Bearer ${token}`,
+                    'authorization': `Bearer ${token}`,
                     'content-type': 'application/json'
                 },
             }
