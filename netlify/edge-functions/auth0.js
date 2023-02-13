@@ -54,13 +54,17 @@ export default async (request, context) => {
     const user_id = context.cookies.get('user_id')
     const token = (await getToken()).access_token
     const user = await getUser(token, user_id)
-    console.log({ip, user_id, token, user})
+    console.log({
+        ip, 
+        user_id, 
+        token, 
+        user
+    })
     return new Response(JSON.stringify(
         {
             ip,
             user_id,
             user,
-            token,
         }, 
         null, 
         2
