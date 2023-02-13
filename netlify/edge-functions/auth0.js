@@ -23,19 +23,44 @@ async function getToken() {
                 })).toString(),
             }
         );
+        return response.json().access_token;
+    } catch (e) {
+        return e;
+    }
+}
+
+async function getUser(token, user_id) {
+    try {
+        const response = await fetch(
+            `https://${DOMAIN}/api/v2/users/${user_id}`, 
+            {
+                method: 'POST',
+                cache: 'no-cache',
+                cors: 'no-cors',
+                headers: {
+                    authorization: `Bearer ${token}`,
+                    'content-type': 'application/json'
+                },
+            }
+        );
         return response.json();
     } catch (e) {
         return e;
     }
 }
 
-export default async (request, context) => 
-    new Response(JSON.stringify(
+export default async (request, context) => {
+    const ip = context.geo.ip
+    const user_id = context.cookies.get('user_id')
+    const token = (await getToken())
+    const user = await getUser(token, user_id)
+    return new Response(JSON.stringify(
         {
-            op: context.geo.ip,
-            user_id: context.cookies.get('user_id'),
-            token: await getToken()
+            ip,
+            user_id,
+            user,
         }, 
         null, 
         2
     ))
+}
