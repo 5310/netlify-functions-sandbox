@@ -23,7 +23,7 @@ async function getToken() {
                 })).toString(),
             }
         );
-        return response.json();
+        return response.json().access_token;
     } catch (e) {
         return e;
     }
