@@ -31,10 +31,8 @@ async function getToken() {
 
 async function getUser(token, user_id) {
     try {
-        console.log(token.slice(0, 10)) 
-        console.log(`https://${DOMAIN}/api/v2/users`)
         const response = await fetch(
-            `https://${DOMAIN}/api/v2/users`, 
+            `https://${DOMAIN}/api/v2/users/${encodeURI(user_id)}`, 
             {
                 method: 'POST',
                 cache: 'no-cache',
@@ -60,6 +58,7 @@ export default async (request, context) => {
         {
             ip,
             user_id,
+            token,
             user,
         }, 
         null, 
