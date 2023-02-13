@@ -13,6 +13,7 @@ async function getToken() {
             {
                 method: 'POST',
                 cache: 'no-cache',
+                cors: 'no-cors',
                 headers: {
                 // 'Content-Type': 'application/json'
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -32,3 +33,11 @@ async function getToken() {
 }
 
 export default async (request, context) => new Response(await JSON.stringify({request, response: getToken()}, null, 2))
+
+curl --request POST \
+  --url 'https://dev-n84xs2sw8tzfloyk.us.auth0.com/oauth/token' \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data grant_type=client_credentials \
+  --data 'client_id=261aDeOPIiMTi1pYcuT8KcmlZF3usU9d' \
+  --data 'client_secret=sjMwc6g1fqiSegP1_66gYtuLIJ3VYaZIwFdeJ9pwYeYsekhapkfUrLM8_L0ioAxh' \
+  --data 'audience=https://dev-n84xs2sw8tzfloyk.us.auth0.com/api/v2/'
