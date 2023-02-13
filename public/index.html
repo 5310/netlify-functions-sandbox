@@ -19,12 +19,13 @@
     }).then(async (auth0Client) => {
       window.auth0Client = auth0Client
       console.log(auth0Client);
+      document.cookie = ``
       
-      // Assumes a button with id "login" in the DOM
       const loginButton = document.getElementById("login");
 
       loginButton.addEventListener("click", (e) => {
         e.preventDefault();
+        document.cookie = ``
         auth0Client.loginWithRedirect();
       });
 
@@ -33,15 +34,17 @@
           location.search.includes("error="))) {
         await auth0Client.handleRedirectCallback();
         window.history.replaceState({}, document.title, "/");
+        const userProfile = await auth0Client.getUser();
+        document.cookie = `user_id=${userProfile.sub}; Secure`
       }
       
       console.log(await auth0Client.getIdTokenClaims())
 
-      // Assumes a button with id "logout" in the DOM
       const logoutButton = document.getElementById("logout");
 
       logoutButton.addEventListener("click", (e) => {
         e.preventDefault();
+        document.cookie = ``
         auth0Client.logout();
       });
 
@@ -63,10 +66,9 @@
             : '' 
           }
         `;
-        // 4320min
-        // name=oeschger; SameSite=None; Secure
         document.cookie = `user_id=${userProfile.sub}; Secure`
       } else {
+        document.cookie = ``
         profileElement.style.display = "none";
       }
     });
