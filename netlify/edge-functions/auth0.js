@@ -1,10 +1,10 @@
-//export default (request, context) => Math.random() > 0.5 ? undefined : context.rewrite("/locked-preview")
+export const config = { path: "/auth0" }
 
 const TENANT = Deno.env.get('TENANT')
 const CLIENTID = Deno.env.get('CLIENTID')
 const CLIENTSECRET = Deno.env.get('CLIENTSECRET')
 
-async function postData() {
+async function getToken() {
     const domain = `${TENANT}.us.auth0.com`
     // Default options are marked with *
     const response = await fetch(
@@ -27,4 +27,4 @@ async function postData() {
     return response.json(); // parses JSON response into native JavaScript objects
 }
 
-export const config = { path: "/locked" }
+export default async (request, context) => new Response(await getToken())
