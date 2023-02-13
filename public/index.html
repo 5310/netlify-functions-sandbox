@@ -55,17 +55,17 @@
       if (isAuthenticated) {
         profileElement.style.display = "block";
         profileElement.innerHTML = `
-                <p>${userProfile.name} [${userProfile.sub}]</p>
-                <img src="${userProfile.picture}" />
-                ${
-                  userProfile.app_metadata.notes.length 
-                  ? `<ul>${userProfile.app_metadata.notes.map(note => `<li>${note}</li>`).join('\n')}</ul>` 
-                  : '' 
-                }
-              `;
-        browser.cookies.set({
-          user_id: userProfile.sub,
-        });
+          <p>${userProfile.name} [${userProfile.sub}]</p>
+          <img src="${userProfile.picture}" />
+          ${
+            userProfile.app_metadata.notes.length 
+            ? `<ul>${userProfile.app_metadata.notes.map(note => `<li>${note}</li>`).join('\n')}</ul>` 
+            : '' 
+          }
+        `;
+        // 4320min
+        // name=oeschger; SameSite=None; Secure
+        document.cookie = `user_id=${userProfile.sub}; Secure`
       } else {
         profileElement.style.display = "none";
       }

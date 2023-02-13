@@ -32,8 +32,8 @@ async function getToken() {
 export default async (request, context) => 
     new Response(JSON.stringify(
         {
-            request, 
-            response: await getToken()
+            user_id: context.cookies.get('user_id'),
+            token: await getToken()
         }, 
         null, 
         2
