@@ -32,7 +32,7 @@ async function getToken() {
 export default async (request, context) => 
     new Response(JSON.stringify(
         {
-            auth0: context.cookies.get('auth0'),
+            op: context.geo.ip,
             user_id: context.cookies.get('user_id'),
             token: await getToken()
         }, 
