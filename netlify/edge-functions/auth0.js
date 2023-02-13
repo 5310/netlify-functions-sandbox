@@ -23,7 +23,7 @@ async function getToken() {
                 })).toString(),
             }
         );
-        return response.json().access_token;
+        return response.json();
     } catch (e) {
         return e;
     }
@@ -53,8 +53,8 @@ export default async (request, context) => {
     const ip = context.ip
     const user_id = context.cookies.get('user_id')
     const token = await getToken()
-    console.log(token)
     const user = await getUser(token, user_id)
+    console.log({ip, user_id, token, user})
     return new Response(JSON.stringify(
         {
             ip,
