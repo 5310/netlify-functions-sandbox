@@ -36,6 +36,7 @@
     }
     const user_profile = localStorage.getItem('user_profile')
     if (user_profile) {
+        console.log(user_profile)
         if (Math.floor(Date.now() / 1000) < user_profile.exp) {
             document.getElementById('profile').innerHTML = `
                 <p>${user_profile.name} [${user_profile.email}]</p>
