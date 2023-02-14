@@ -39,7 +39,7 @@ exports.handler = async function (event, context) {
     // },
     statusCode: 200,
     headers: {
-      'Set-Cookie': `user_id=${user_profile.sub}; Secure; HttpOnly`,
+      'Set-Cookie': `user_id=${user_profile.sub}; Path=/; Secure; HttpOnly`,
     },
     body: `
       <!DOCTYPE html>
