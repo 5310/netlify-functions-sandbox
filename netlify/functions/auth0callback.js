@@ -3,10 +3,14 @@ const CLIENTID = process.env.AUTH0_CLIENTID
 const SITEURL = process.env.URL
 
 exports.handler = async function (event, context) {
-  const id_token = (new URLSearchParams(event.body)).get('id_token') ?? ''
+  const params = new URLSearchParams(event.body)
+  console.log(params)
+  const id_token = params.get('id_token') ?? ''
+  const access_token = params.get('access_token') ?? ''
   const url = new URL(SITEURL)
   url.search = new URLSearchParams({
     id_token,
+    access_token,
   })
   return {
     // statusCode: 302,
