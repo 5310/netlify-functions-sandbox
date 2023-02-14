@@ -52,11 +52,13 @@ async function getUser(token, user_id) {
 export default async (request, context) => {
   const ip = context.ip
   const user_id = context.cookies.get('user_id')
+  const user_access_token = context.cookies.get('access_token')
   const token = (await getToken()).access_token
   const user = await getUser(token, user_id)
   console.log({
     ip,
     user_id,
+    user_access_token,
     token,
     user
   })
