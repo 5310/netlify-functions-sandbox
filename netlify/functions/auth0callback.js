@@ -6,21 +6,21 @@ exports.handler = async function (event, context) {
   const id_token = (new URLSearchParams(event.body)).get('id_token') ?? ''
 
   return {
-    // statusCode: 302,
-    // headers: {
-    //   'Set-Cookie': `id_token=${id_token}`,
-    //   'Location': URL,
-    // },
-    statusCode: 200,
+    statusCode: 302,
     headers: {
-      'Set-Cookie': `id_token=${id_token}`, // won't be visible to frontend anyway
+      'Set-Cookie': `id_token=${id_token}; Secure`, // won't be visible on the frontend anyway, won't show up at all
+      'Location': URL,
     },
-    body: `
-      <!DOCTYPE html>
-      <html>
-      <head><meta http-equiv="refresh" content="0; url='${URL}'"></head>
-      <body>${id_token}</body>
-      </html>
-    `
+    // statusCode: 200,
+    // headers: {
+    //   'Set-Cookie': `id_token=${id_token}; Secure`, // won't be visible to frontend anyway, still won't show up
+    // },
+    // body: `
+    //   <!DOCTYPE html>
+    //   <html>
+    //   <head><meta http-equiv="refresh" content="0; url='${URL}'"></head>
+    //   <body>${id_token}</body>
+    //   </html>
+    // `
   }
 }
