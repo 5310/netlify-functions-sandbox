@@ -25,11 +25,11 @@
         document.cookie = `user_id=${user_id}; Secure`
 
         document.getElementById('profile').innerHTML = `
-            <p>${userProfile.name} [${userProfile.sub}]</p>
-            <img src="${userProfile.picture}" />
+            <p>${user_profile.name} [${user_profile.sub}]</p>
+            <img src="${user_profile.picture}" />
             ${
-                userProfile.app_metadata.notes.length 
-                ? `<ul>${userProfile.app_metadata.notes.map(note => `<li>${note}</li>`).join('\n')}</ul>` 
+                user_profile.app_metadata.notes.length 
+                ? `<ul>${user_profile.app_metadata.notes.map(note => `<li>${note}</li>`).join('\n')}</ul>` 
                 : '' 
             }
         `;
