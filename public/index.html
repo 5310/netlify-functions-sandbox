@@ -20,6 +20,7 @@
 
         const user_profile = parseJWT(id_token)
         window.auth0_user_profile = user_profile
+        console.log(window.auth0_user_profile)
 
         const user_id = user_profile.sub
         document.cookie = `user_id=${user_id}; Secure`
