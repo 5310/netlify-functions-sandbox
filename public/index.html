@@ -20,13 +20,12 @@
         window.history.replaceState({}, document.title, "/");
 
         const user_profile = parseJWT(id_token)
-        user_profile.access_token = access_token
         window.auth0_user_profile = user_profile
         console.log(window.auth0_user_profile)
 
         const user_id = user_profile.sub
         document.cookie = `user_id=${user_id}; Secure`
-        document.cookie = `access_token=${access_token}; Secure`
+        document.cookie = `access_token=${access_token}; Secure; HttpOnly`
 
         document.getElementById('profile').innerHTML = `
             <p>${user_profile.name} [${user_profile.sub}]</p>
@@ -48,7 +47,6 @@
                     : '' 
                 }
             `;
-            document.cookie = `user_id=${auth0_user_profile.sub}; Secure`
         } else {
             delete window.window.auth0_user_profile
             document.cookie = ''
