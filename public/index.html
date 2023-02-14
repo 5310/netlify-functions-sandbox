@@ -14,30 +14,23 @@
     }
 
     const params = new URLSearchParams(location.search)
+    let id_token
     if (params.has('id_token')) {
-        const id_token = params.get('id_token')
+        id_token = params.get('id_token')
         const access_token = params.get('access_token')
         window.history.replaceState({}, document.title, "/");
 
+        document.cookie = `id_token=${id_token}; Secure;`
+        document.cookie = `access_token=${access_token}; Secure; HttpOnly`
+    }
+    if (id_token) {
         const user_profile = parseJWT(id_token)
         window.auth0_user_profile = user_profile
         console.log(window.auth0_user_profile)
 
-        const user_id = user_profile.sub
-        document.cookie = `user_id=${user_id}; Secure`
-        document.cookie = `access_token=${access_token}; Secure; HttpOnly`
+        if (Math.floor(Date.now() / 1000) < window.auth0_user_profile.exp) {        
+            document.cookie = `user_id=${user_profile.sub}; Secure`
 
-        document.getElementById('profile').innerHTML = `
-            <p>${user_profile.name} [${user_profile.sub}]</p>
-            <img src="${user_profile.picture}" />
-            ${
-                user_profile.app_metadata.notes.length 
-                ? `<ul>${user_profile.app_metadata.notes.map(note => `<li>${note}</li>`).join('\n')}</ul>` 
-                : '' 
-            }
-        `;
-    } else {
-        if (Math.floor(Date.now() / 1000) < window.auth0_user_profile.exp) {
             document.getElementById('profile').innerHTML = `
                 <p>${user_profile.name} [${user_profile.sub}]</p>
                 <img src="${user_profile.picture}" />
@@ -48,8 +41,7 @@
                 }
             `;
         } else {
-            delete window.window.auth0_user_profile
-            document.cookie = ''
+            // TODO: delete cookies
         }
     }
 </script>
