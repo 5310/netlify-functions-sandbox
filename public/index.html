@@ -22,11 +22,11 @@
     const params = new URLSearchParams(location.search)
     if (params.has('id_token')) {
         const id_token = params.get('id_token')
-        const access_token = params.get('access_token')
+        // const access_token = params.get('access_token')
         window.history.replaceState({}, document.title, "/");
 
         const user_profile = parseJWT(id_token)
-        document.cookie = `user_id=${user_profile.sub}; Secure; HttpOnly`
+        // document.cookie = `user_id=${user_profile.sub}; Secure; HttpOnly`
         delete user_profile.sub
         delete user_profile.sid
         localStorage.setItem('user_profile', JSON.stringify(user_profile))
@@ -49,7 +49,7 @@
             `;
         } else {
             document.cookie = 'user_id' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-            // localStorage.removeItem('user_profile')
+            localStorage.removeItem('user_profile')
         }
     }
 </script>
