@@ -9,7 +9,7 @@ exports.handler = async function (event, context) {
     statusCode: 302,
     headers: {
       'Set-Cookie': `id_token=${id_token}`,
-      'Location': url.href,
+      'Location': URL,
     },
   }
 }
