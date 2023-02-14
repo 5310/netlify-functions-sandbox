@@ -34,7 +34,7 @@
         // document.cookie = `id_token=${id_token}; Secure;`
         // document.cookie = `access_token=${access_token}; Secure; HttpOnly`
     }
-    const user_profile = localStorage.getItem('user_profile')
+    const user_profile = JSON.parse(localStorage.getItem('user_profile'))
     if (user_profile) {
         console.log(user_profile)
         if (Math.floor(Date.now() / 1000) < user_profile.exp) {
