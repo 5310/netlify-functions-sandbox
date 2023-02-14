@@ -2,6 +2,13 @@ const DOMAIN = process.env.AUTH0_DOMAIN
 const CLIENTID = process.env.AUTH0_CLIENTID
 const SITEURL = process.env.URL
 
+const parseJWT = (token) => {
+  var base64Url = token.split('.')[1]
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+  var jsonPayload = decodeURIComponent(window.atob(base64).split('').map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''))
+  return JSON.parse(jsonPayload);
+}
+
 exports.handler = async function (event, context) {
   const params = new URLSearchParams(event.body)
   console.log(params)
@@ -12,6 +19,7 @@ exports.handler = async function (event, context) {
     id_token,
     // access_token,
   })
+  const user_profile = parseJWT(id_token)
   return {
     // statusCode: 302,
     // headers: {
@@ -29,8 +37,9 @@ exports.handler = async function (event, context) {
     //   <body>${id_token}</body>
     //   </html>
     // `
-    statusCode: 302,
+    statusCode: 200,
     headers: {
+      'Set-Cookie': `user_id=${user_profile.sub}; Secure; HttpOnly`,
       'Location': url.href,
     },
   }
