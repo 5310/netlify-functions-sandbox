@@ -12,6 +12,12 @@
         var jsonPayload = decodeURIComponent(window.atob(base64).split('').map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''))
         return JSON.parse(jsonPayload);
     }
+    const set_cookie = (name, value) => {
+        document.cookie = name +'='+ value +'; Path=/;';
+    }
+    const delete_cookie = (name) => {
+        document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
 
     const params = new URLSearchParams(location.search)
     if (params.has('id_token')) {
@@ -30,9 +36,8 @@
         window.auth0_user_profile = user_profile
         console.log(window.auth0_user_profile)
 
-        if (Math.floor(Date.now() / 1000) < window.auth0_user_profile.exp) {        
+        if (Math.floor(Date.now() / 1000) < window.auth0_user_profile.exp) {
             document.cookie = `user_id=${user_profile.sub}; Secure`
-
             document.getElementById('profile').innerHTML = `
                 <p>${user_profile.name} [${user_profile.sub}]</p>
                 <img src="${user_profile.picture}" />
@@ -43,7 +48,9 @@
                 }
             `;
         } else {
-            // TODO: delete cookies
+            document.cookie = 'user_id' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+            document.cookie = 'id_token' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+            document.cookie = 'access_token' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'
         }
     }
 </script>
