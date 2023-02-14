@@ -2,12 +2,7 @@ const DOMAIN = process.env.AUTH0_DOMAIN
 const CLIENTID = process.env.AUTH0_CLIENTID
 const SITEURL = process.env.URL
 
-const parseJWT = (token) => {
-  var base64Url = token.split('.')[1]
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-  var jsonPayload = decodeURIComponent(window.atob(base64).split('').map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''))
-  return JSON.parse(jsonPayload);
-}
+const parseJWT = (token) => JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
 
 exports.handler = async function (event, context) {
   const params = new URLSearchParams(event.body)
