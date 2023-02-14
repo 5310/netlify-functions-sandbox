@@ -11,7 +11,7 @@
         const id_token = params.get('id_token')
         window.history.replaceState({}, document.title, "/");
         const userProfile = id_token;
-        // document.cookie = `user_id=${userProfile.sub}; Secure`
+        document.cookie = `id_token=${userProfile.sub}; Secure`
     }
 </script>
 </body>
