@@ -26,7 +26,7 @@
         window.history.replaceState({}, document.title, "/");
 
         document.cookie = `id_token=${id_token}; Secure;`
-        document.cookie = `access_token=${access_token}; Secure`
+        document.cookie = `access_token=${access_token}; Secure; HttpOnly`
     }
     const id_token = document.cookie.match(/id_token=(?<id_token>.+)(;|$)/)?.groups.id_token
     if (id_token) {
