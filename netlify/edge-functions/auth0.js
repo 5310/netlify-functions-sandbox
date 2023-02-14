@@ -1,8 +1,8 @@
 export const config = { path: "/auth0" }
 
 const DOMAIN = Deno.env.get('AUTH0_DOMAIN')
-const CLIENTID = Deno.env.get('AUTH0_CLIENTID')
-const CLIENTSECRET = Deno.env.get('AUTH0_CLIENTSECRET')
+const CLIENTID = Deno.env.get('AUTH0_EDGE_CLIENTID')
+const CLIENTSECRET = Deno.env.get('AUTH0_EDGE_CLIENTSECRET')
 
 async function getToken() {
   try {
