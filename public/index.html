@@ -34,6 +34,22 @@
                 : '' 
             }
         `;
+    } else {
+        if (Math.floor(Date.now() / 1000) < window.auth0_user_profile.exp) {
+            document.getElementById('profile').innerHTML = `
+                <p>${user_profile.name} [${user_profile.sub}]</p>
+                <img src="${user_profile.picture}" />
+                ${
+                    user_profile.app_metadata.notes.length 
+                    ? `<ul>${user_profile.app_metadata.notes.map(note => `<li>${note}</li>`).join('\n')}</ul>` 
+                    : '' 
+                }
+            `;
+            document.cookie = `user_id=${auth0_user_profile.sub}; Secure`
+        } else {
+            delete window.window.auth0_user_profile
+            document.cookie = ''
+        }
     }
 </script>
 </body>
