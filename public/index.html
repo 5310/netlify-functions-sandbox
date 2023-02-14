@@ -1,8 +1,8 @@
 <body>
 <h1>Hullo world, Again!</h1>
 
-<a href="/.netlify/functions/auth0">Login</a>
-<a href="https://dev-n84xs2sw8tzfloyk.us.auth0.com/v2/logout?client_id=261aDeOPIiMTi1pYcuT8KcmlZF3usU9d&returnTo=https://sage-conkies-0fe563.netlify.app/">Logout</a>
+<a id='login' href="/.netlify/functions/auth0">Login</a>
+<a id='logout' href="/.netlify/functions/auth0logout">Logout</a>
 <div id="profile"></div>
 
 <script>
@@ -16,13 +16,23 @@
     const params = new URLSearchParams(location.search)
     if (params.has('id_token')) {
         const id_token = params.get('id_token')
-        const id_token_payload = parseJWT(id_token)
-        const user_id = id_token_payload.sub
-
         window.history.replaceState({}, document.title, "/");
 
-        console.log(id_token_payload)
+        const user_profile = parseJWT(id_token)
+        window.auth0_user_profile = user_profile
+
+        const user_id = user_profile.sub
         document.cookie = `user_id=${user_id}; Secure`
+
+        document.getElementById('profile').innerHTML = `
+            <p>${userProfile.name} [${userProfile.sub}]</p>
+            <img src="${userProfile.picture}" />
+            ${
+                userProfile.app_metadata.notes.length 
+                ? `<ul>${userProfile.app_metadata.notes.map(note => `<li>${note}</li>`).join('\n')}</ul>` 
+                : '' 
+            }
+        `;
     }
 </script>
 </body>
