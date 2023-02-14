@@ -10,6 +10,7 @@ exports.handler = async function (event, context) {
     redirect_uri: `${SITEURL}/.netlify/functions/auth0callback`,
     response_type: 'id_token',
     response_mode: 'form_post',
+    scope: 'openid profile email app_metadata'
   })
   return {
     statusCode: 302,
