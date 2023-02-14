@@ -1,8 +1,20 @@
+const DOMAIN = process.env.AUTH0_DOMAIN
+const CLIENTID = process.env.AUTH0_CLIENTID
+const URL = process.env.URL
+
 exports.handler = async function (event, context) {
+  const url = new URL(`https://${DOMAIN}/authorize`)
+  url.search = new URLSearchParams({
+    client_id: CLIENTID,
+    none: '123456789',
+    redirect_uri: `https://${URL}/.netlify/functions/auth0callback`,
+    response_type: 'id_token',
+    response_mode: 'form_post',
+  })
   return {
-    statusCode: 200,
+    statusCode: 302,
     headers: {
-      'Location': 'https://dev-n84xs2sw8tzfloyk.us.auth0.com/authorize?response_type=id_token&response_mode=form_post&client_id=261aDeOPIiMTi1pYcuT8KcmlZF3usU9d&redirect_uri=https://sage-conkies-0fe563.netlify.app&nonce=123456789',
+      'Location': url.href,
     },
   }
 }
