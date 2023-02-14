@@ -22,7 +22,10 @@
 
         document.cookie = `id_token=${id_token}; Secure;`
         document.cookie = `access_token=${access_token}; Secure; HttpOnly`
+
+        id_token = undefined
     }
+    id_token = document.cookie.match(/id_token=(.+);/)?.[1]
     if (id_token) {
         const user_profile = parseJWT(id_token)
         window.auth0_user_profile = user_profile
