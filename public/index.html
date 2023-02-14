@@ -27,8 +27,6 @@
 
         document.cookie = `id_token=${id_token}; Secure;`
         document.cookie = `access_token=${access_token}; Secure`
-
-        id_token = undefined
     }
     const id_token = document.cookie.match(/id_token=(?<id_token>.+)(;|$)/)?.groups.id_token
     if (id_token) {
