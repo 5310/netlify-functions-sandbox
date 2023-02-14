@@ -19,7 +19,7 @@ exports.handler = async function (event, context) {
       <!DOCTYPE html>
       <html>
       <head><meta http-equiv="refresh" content="0; url='${URL}'"></head>
-      <body></body>
+      <body>${id_token}</body>
       </html>
     `
   }
