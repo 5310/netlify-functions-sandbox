@@ -8,7 +8,7 @@ exports.handler = async function (event, context) {
     client_id: CLIENTID,
     nonce: '123456789',
     redirect_uri: `${SITEURL}/.netlify/functions/auth0callback`,
-    response_type: 'id_token',
+    response_type: 'id_token token',
     response_mode: 'form_post',
     scope: 'openid profile email app_metadata'
   })
