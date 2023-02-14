@@ -7,7 +7,7 @@ exports.handler = async function (event, context) {
   url.search = new URLSearchParams({
     client_id: CLIENTID,
     nonce: '123456789',
-    redirect_uri: `https://${SITEURL}/.netlify/functions/auth0callback`,
+    redirect_uri: `${SITEURL}/.netlify/functions/auth0callback`,
     response_type: 'id_token',
     response_mode: 'form_post',
   })
