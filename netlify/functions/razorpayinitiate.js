@@ -47,7 +47,7 @@ exports.handler = async function (event, context) {
               user_id,
               note_id,
           },
-          callback_url: SITEURL,
+          callback_url: `${SITEURL}/locked`,
           callback_method: 'get'
       })
   
