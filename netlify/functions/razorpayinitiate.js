@@ -46,7 +46,7 @@ exports.handler = async function (event, context) {
     console.log(pl)
 
     return {
-      statusCode: 200,
+      statusCode: 302,
       headers: {
         'Location': pl.short_url,
       },
