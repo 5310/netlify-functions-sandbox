@@ -32,36 +32,47 @@ exports.handler = async function (event, context) {
 
     const url = new URL(SITEURL)
 
-    try {
-      const expire_by = new Date(Date.now() + 30*60*1000 )
-      const pl = await razorpay.paymentLink.create({
-          amount: 4200,
-          currency: 'INR',
-          description: 'Unlock a note',
-          expire_by: expire_by.getTime(),
-          reminder_enable: true,
-          // reference_id: `note/${note_id}:${user_id}`, // too long
-          // reference_id: `${user_id}`, // not like we get to reuse an existing one
-          notes: {
-              user_id,
-              note_id,
-          },
-          callback_url: `${SITEURL}/locked`,
-          callback_method: 'get'
-      })
-  
-      console.log(pl)
-  
+    const short_url = cookie.parse(event.headers.cookie).razorpay_link
+    if (short_url) {
       return {
         statusCode: 302,
         headers: {
-          'Set-Cookie': `razorpay_link=${pl.short_url}; Path=/auth0; Secure; Expires=${expire_by.toUTCString()}`, // this path should be the actual notes page, but we don't have one right now
-          'Location': pl.short_url,
+          'Location': short_url,
         },
       }
-    } catch (error) {
-      console.log(error)
     }
-
-    return {statusCode: 200}
+    else {
+      try {
+        const expire_by = new Date(Date.now() + 30*60*1000 )
+        const pl = await razorpay.paymentLink.create({
+            amount: 4200,
+            currency: 'INR',
+            description: 'Unlock a note',
+            expire_by: expire_by.getTime(),
+            reminder_enable: true,
+            // reference_id: `note/${note_id}:${user_id}`, // too long
+            // reference_id: `${user_id}`, // not like we get to reuse an existing one
+            notes: {
+                user_id,
+                note_id,
+            },
+            callback_url: `${SITEURL}/locked`,
+            callback_method: 'get'
+        })
+    
+        console.log(pl)
+    
+        return {
+          statusCode: 302,
+          headers: {
+            'Set-Cookie': `razorpay_link=${pl.short_url}; Path=/auth0; Secure; Expires=${expire_by.toUTCString()}`, // this path should be the actual notes page, but we don't have one right now
+            'Location': pl.short_url,
+          },
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    
+    return {statusCode: 501}
   }
