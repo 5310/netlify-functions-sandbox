@@ -37,13 +37,10 @@ exports.handler = async function (event, context) {
           amount: 4200,
           currency: 'INR',
           description: 'Unlock a note',
-          notify: {
-              email: true
-          },
           expire_by: new Date(Date.now() + 30*60*1000 ).getTime(),
           reminder_enable: true,
-          // reference_id: `note/${note_id}:${user_id}`,
-          // reference_id: `${user_id}`,
+          // reference_id: `note/${note_id}:${user_id}`, // too long
+          // reference_id: `${user_id}`, // not like we get to reuse an existing one
           notes: {
               user_id,
               note_id,
