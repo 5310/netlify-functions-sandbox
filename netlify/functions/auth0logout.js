@@ -11,6 +11,7 @@ exports.handler = async function (event, context) {
   return {
     statusCode: 302,
     headers: {
+      'Set-Cookie': `user_id=; Path=/; Secure; HttpOnly; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`,
       'Location': url.href,
     },
   }
