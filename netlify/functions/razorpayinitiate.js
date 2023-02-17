@@ -18,8 +18,11 @@ const razorpay = new Razorpay({ key_id: RAZORPAY_ID, key_secret: RAZORUPAY_SECRE
 
 exports.handler = async function (event, context) {
     console.log(JSON.stringify({keys: Object.keys(event), payload: event.payload, site: event.site}, null, 2))
+
     const note_id = event.queryStringParameters.note_id
     const user_id = event.multiValueHeaders.Cookie[0].match(/user_id=(.+)$/)[1]
+
+    console.log({note_id, user_id})
 
     if (!note_id || !user_id) return {
         statusCode: 400,
@@ -35,7 +38,7 @@ exports.handler = async function (event, context) {
             email: true
         },
         reminder_enable: true,
-        reference_id: `note/${note_id}:user_id`,
+        reference_id: `note/${note_id}:${user_id}`,
         notes: {
             user_id,
             note_id,
