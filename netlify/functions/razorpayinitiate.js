@@ -17,7 +17,7 @@ const razorpay = new Razorpay({ key_id: RAZORPAY_ID, key_secret: RAZORUPAY_SECRE
  */
 
 exports.handler = async function (event, context) {
-    console.log(JSON.stringify({event, context}, null, 2))
+    // console.log(JSON.stringify({event, context}, null, 2))
     const note_id = event.multiValueQueryStringParameters.note_id[0]
     const user_id = event.multiValueHeaders.Cookie[0].match(/user_id=(.+)$/)[1]
 
@@ -27,7 +27,7 @@ exports.handler = async function (event, context) {
 
     const url = new URL(SITEURL)
 
-    const pl = razorpay.paymentLink.create({
+    const pl = await razorpay.paymentLink.create({
         amount: 4200,
         currency: 'INR',
         description: 'Unlock a note',
