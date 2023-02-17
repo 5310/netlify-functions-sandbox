@@ -14,7 +14,7 @@ const razorpay = new Razorpay({ key_id: RAZORPAY_ID, key_secret: RAZORUPAY_SECRE
 
 exports.handler = async function (event, context) {
     const params = new URLSearchParams(event.body)
-    console.log(params)
+    console.log(JSON.stringify({params}, null, 2))
     return {
         statusCode: 200,
         body: JSON.stringify(params, null, 2),
