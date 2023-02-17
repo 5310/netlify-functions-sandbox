@@ -18,40 +18,39 @@ const razorpay = new Razorpay({ key_id: RAZORPAY_ID, key_secret: RAZORUPAY_SECRE
 
 exports.handler = async function (event, context) {
     console.log(JSON.stringify({event, context}, null, 2))
-    // const params = new URLSearchParams(event.body)
-    // const note_id = params.get('note_id')
-    // const user_id = event.cookie['user_id']
+    const note_id = event.multiValueQueryStringParameters.note_id[0]
+    const user_id = event.multiValueHeaders.Cookie[0].match(/user_id=(.+)$/)[1]
 
-    // if (!note_id || !user_id) return {
-    //     statusCode: 400,
-    // }
+    if (!note_id || !user_id) return {
+        statusCode: 400,
+    }
 
-    // const url = new URL(SITEURL)
+    const url = new URL(SITEURL)
 
-    // const pl = razorpay.paymentLink.create({
-    //     amount: 4200,
-    //     currency: 'INR',
-    //     description: 'Unlock a note',
-    //     notify: {
-    //         email: true
-    //     },
-    //     reminder_enable: true,
-    //     notes: {
-    //         user_id,
-    //         note_id,
-    //     },
-    //     callback_url: SITEURL,
-    //     callback_method: 'get'
-    // })
+    const pl = razorpay.paymentLink.create({
+        amount: 4200,
+        currency: 'INR',
+        description: 'Unlock a note',
+        notify: {
+            email: true
+        },
+        reminder_enable: true,
+        notes: {
+            user_id,
+            note_id,
+        },
+        callback_url: SITEURL,
+        callback_method: 'get'
+    })
 
-    // console.log(pl)
+    console.log(pl)
 
-    // return {
-    //   statusCode: 200,
-    //   headers: {
-    //     'Location': pl.short_url,
-    //   },
-    // }
+    return {
+      statusCode: 200,
+      headers: {
+        'Location': pl.short_url,
+      },
+    }
 
     return {statusCode: 200}
   }
