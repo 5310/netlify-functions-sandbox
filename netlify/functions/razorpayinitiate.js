@@ -54,6 +54,7 @@ exports.handler = async function (event, context) {
       return {
         statusCode: 302,
         headers: {
+          'Set-Cookie': `razorpay_link=${pl.short_url}; Path=/auth0; Secure`, // this path should be the actual notes page, but we don't have one right now
           'Location': pl.short_url,
         },
       }
