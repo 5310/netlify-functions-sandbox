@@ -17,10 +17,10 @@ const razorpay = new Razorpay({ key_id: RAZORPAY_ID, key_secret: RAZORUPAY_SECRE
  */
 
 exports.handler = async function (event, context) {
-    console.log(JSON.stringify({keys: Object.keys(event), event}, null, 2))
+    console.log(JSON.stringify({keys: Object.keys(event), event, cookie: event.cookie}, null, 2))
 
     const note_id = event.queryStringParameters.note_id
-    const user_id = event.multiValueHeaders.Cookie[0].match(/user_id=(.+)$/)[1]
+    const user_id = event.headers.cookie.match(/user_id=(?<id>.+)[;|$]/).groups.id
 
     console.log({note_id, user_id})
 
@@ -47,7 +47,7 @@ exports.handler = async function (event, context) {
         callback_method: 'get'
     })
 
-    console.log(pl)
+    console.log({pl, url: pl.short_url})
 
     return {
       statusCode: 302,
