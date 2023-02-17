@@ -42,7 +42,7 @@ exports.handler = async function (event, context) {
           },
           reminder_enable: true,
           // reference_id: `note/${note_id}:${user_id}`,
-          reference_id: `${user_id}`,
+          // reference_id: `${user_id}`,
           notes: {
               user_id,
               note_id,
