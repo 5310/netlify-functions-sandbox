@@ -19,7 +19,7 @@ const razorpay = new Razorpay({ key_id: RAZORPAY_ID, key_secret: RAZORUPAY_SECRE
  */
 
 exports.handler = async function (event, context) {
-    console.log(JSON.stringify({keys: Object.keys(event), event, cookie: event.cookie}, null, 2))
+    console.log(JSON.stringify({keys: Object.keys(event), event, cookie: event.cookie ?? 'not found'}, null, 2))
 
     const note_id = event.queryStringParameters.note_id
     const user_id = cookie.parse(event.headers.cookie).user_id
