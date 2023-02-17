@@ -1,3 +1,6 @@
+const cookie = require('cookie')
+const Razorpay = require('razorpay')
+
 const SITEURL = process.env.URL
 
 const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN
@@ -6,7 +9,6 @@ const AUTH0_WEB_CLIENTID = process.env.AUTH0_WEB_CLIENTID
 
 const RAZORPAY_ID = process.env.RAZORPAY_ID
 const RAZORUPAY_SECRET = process.env.RAZORPAY_SECRET
-const Razorpay = require('razorpay')
 const razorpay = new Razorpay({ key_id: RAZORPAY_ID, key_secret: RAZORUPAY_SECRET })
 
 /* 
@@ -20,7 +22,7 @@ exports.handler = async function (event, context) {
     console.log(JSON.stringify({keys: Object.keys(event), event, cookie: event.cookie}, null, 2))
 
     const note_id = event.queryStringParameters.note_id
-    const user_id = event.headers.cookie.match(/user_id=(?<id>.+)[;|$]/).groups.id
+    const user_id = cookie.parse(event.headers.cookie).user_id
 
     console.log({note_id, user_id})
 
@@ -30,30 +32,34 @@ exports.handler = async function (event, context) {
 
     const url = new URL(SITEURL)
 
-    const pl = await razorpay.paymentLink.create({
-        amount: 4200,
-        currency: 'INR',
-        description: 'Unlock a note',
-        notify: {
-            email: true
+    try {
+      const pl = await razorpay.paymentLink.create({
+          amount: 4200,
+          currency: 'INR',
+          description: 'Unlock a note',
+          notify: {
+              email: true
+          },
+          reminder_enable: true,
+          reference_id: `note/${note_id}:${user_id}`,
+          notes: {
+              user_id,
+              note_id,
+          },
+          callback_url: SITEURL,
+          callback_method: 'get'
+      })
+  
+      console.log(pl)
+  
+      return {
+        statusCode: 302,
+        headers: {
+          'Location': pl.short_url,
         },
-        reminder_enable: true,
-        reference_id: `note/${note_id}:${user_id}`,
-        notes: {
-            user_id,
-            note_id,
-        },
-        callback_url: SITEURL,
-        callback_method: 'get'
-    })
-
-    console.log({pl, url: pl.short_url})
-
-    return {
-      statusCode: 302,
-      headers: {
-        'Location': pl.short_url,
-      },
+      }
+    } catch (error) {
+      console.log(error)
     }
 
     return {statusCode: 200}
