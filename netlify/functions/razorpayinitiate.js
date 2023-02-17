@@ -19,7 +19,7 @@ const razorpay = new Razorpay({ key_id: RAZORPAY_ID, key_secret: RAZORUPAY_SECRE
 exports.handler = async function (event, context) {
     const params = new URLSearchParams(event.body)
     const note_id = params.get('note_id')
-    const user_id = context.cookies.get('user_id')
+    const user_id = event.cookie['user_id']
 
     if (!note_id || !user_id) return {
         statusCode: 400,
